@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from '../base.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Cliente } from 'src/app/models/cliente.model';
 import { Observable } from 'rxjs';
+import { Categoria } from '../../models/produto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class ClienteService extends BaseService {
   }
 
   public Inserir(cliente: Cliente): Observable<Cliente> {
-     return null;
+     return this.HttpClient.post<Cliente>(this.EndPoint("Cliente"), cliente);
   }
 
   public Atualizar(cliente: Cliente): Observable<Cliente> {

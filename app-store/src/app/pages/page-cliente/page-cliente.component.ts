@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ClienteService } from '../../services/cliente-service/cliente.service';
+import { Cliente } from '../../models/cliente.model';
 
 @Component({
   selector: 'page-cliente',
@@ -7,7 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class PageClienteComponent implements OnInit {
-  constructor() { }
+  public Cliente: Cliente;
+  public Mensagem: String;
+  constructor(
+    private ClienteService : ClienteService
+  ) { 
+    this.Cliente = new Cliente();
+  }
 
   ngOnInit() {  
   }
@@ -16,9 +24,17 @@ export class PageClienteComponent implements OnInit {
   }
 
   public Salvar() {   
+    if(this.Cliente.Senha == this.Cliente.ConfirmarSenha) 
+      this.Cadastrar(); //console.log(this.Cliente);
+      else
+     this.Mensagem = "senhas diferentes";
   }
 
-  private Cadastrar() {    
+  public Cadastrar() {    
+    this.ClienteService.Inserir(this.Cliente).subscribe(
+      cliente => this.Mensagem ="Usuário salvo",
+      erro => console.log(erro)
+    )
   }
 
   private Alterar() {
